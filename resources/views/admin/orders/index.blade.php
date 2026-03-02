@@ -22,13 +22,13 @@
                     <td>${{ $o->total_amount }}</td>
                     <td>
                         @if($o->status == 'completed')
-                            <span class="badge bg-success">✅ Completed</span>
+                            <span class="badge bg-success">Completed</span>
                         @elseif($o->status == 'cancelled')
-                            <span class="badge bg-danger">❌ Cancelled</span>
+                            <span class="badge bg-danger">Cancelled</span>
                         @elseif($o->status == 'processing')
-                            <span class="badge bg-info">🔄 Processing</span>
+                            <span class="badge bg-info">Processing</span>
                         @else
-                            <span class="badge bg-warning">⏳ Pending</span>
+                            <span class="badge bg-warning">Pending</span>
                         @endif
                     </td>
                     <td>
