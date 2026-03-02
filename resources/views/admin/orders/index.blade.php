@@ -17,9 +17,9 @@
             <tbody>
                 @forelse(orders as o)
                 <tr>
-                    <td>{{ o->order_number }}</td>
-                    <td>{{ o->customer?->name }}</td>
-                    <td>{{ o->total_amount }}</td>
+                    <td>{{ $o->order_number }}</td>
+                    <td>{{ $o->customer?->name }}</td>
+                    <td>{{ $o->total_amount }}</td>
                     <td>
                         @if(o->status == 'completed')
                             <span class="badge bg-success">Completed</span>
@@ -32,7 +32,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="/orders/{{ o->id }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-primary">Edit</a>
                     </td>
                 </tr>
                 @empty
