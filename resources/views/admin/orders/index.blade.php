@@ -25,26 +25,14 @@
                             <span class="badge bg-success">✅ Completed</span>
                         @elseif($o->status == 'cancelled')
                             <span class="badge bg-danger">❌ Cancelled</span>
-                            <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">
-                                @csrf @method('PUT')
-                                <button type="submit" name="status" value="pending" class="btn btn-sm btn-warning">إعادة</button>
-                            </form>
                         @elseif($o->status == 'processing')
                             <span class="badge bg-info">🔄 Processing</span>
-                            <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">
-                                @csrf @method('PUT')
-                                <button type="submit" name="status" value="completed" class="btn btn-sm btn-success">✓</button>
-                            </form>
                         @else
                             <span class="badge bg-warning">⏳ Pending</span>
-                            <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">
-                                @csrf @method('PUT')
-                                <button type="submit" name="status" value="processing" class="btn btn-sm btn-info">→</button>
-                            </form>
                         @endif
                     </td>
                     <td>
-                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-info">View</a>
+                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-primary">تعديل</a>
                         @if($o->status != 'completed')
                         <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">@csrf @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">X</button>
