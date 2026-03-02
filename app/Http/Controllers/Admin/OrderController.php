@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $r)
     {
         $orders = Order::with('customer')->when($r->status, fn($q, $s) => $q->where('status', $s))->orderBy('id', 'DESC')->paginate(10);
