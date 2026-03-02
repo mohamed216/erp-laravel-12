@@ -23,3 +23,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
 });
+
+Route::get('/lang/{locale}', function ($locale) {
+    session(['locale' => $locale]);
+    app()->setLocale($locale);
+    return back();
+});

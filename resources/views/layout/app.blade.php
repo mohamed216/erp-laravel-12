@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'نظام ERP')</title>
+    <title>@yield('title', 'ERP System')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    @if(app()->getLocale() == 'ar')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    @endif
     <style>
-        body { background: #f4f6f9; font-family: 'Tahoma', sans-serif; }
+        body { background: #f4f6f9; }
         .sidebar { background: #fff; min-height: 100vh; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
         .sidebar a { color: #333; padding: 10px 15px; display: block; text-decoration: none; border-radius: 6px; margin: 2px 5px; font-size: 14px; }
         .sidebar a:hover, .sidebar a.active { background: #4f46e5; color: #fff; }
@@ -18,26 +21,36 @@
 <body>
     <div class="container-fluid">
         <div class="row">
+            @auth
             <div class="col-md-2 sidebar p-0">
-                <div class="p-2 border-bottom"><h6 class="m-0">🏢 نظام ERP</h6></div>
+                <div class="p-2 border-bottom d-flex justify-content-between align-items-center">
+                    <h6 class="m-0">🏢 ERP</h6>
+                    <a href="/lang/en" class="btn btn-sm btn-outline-secondary">EN</a>
+                </div>
                 <nav>
-                    <a href="/dashboard" class="{{ request()->is('dashboard') ? 'active' : '' }}">📊 لوحة التحكم</a>
-                    <a href="/users" class="{{ request()->is('users*') ? 'active' : '' }}">👥 المستخدمين</a>
-                    <a href="/customers" class="{{ request()->is('customers*') ? 'active' : '' }}">👤 العملاء</a>
-                    <a href="/products" class="{{ request()->is('products*') ? 'active' : '' }}">📦 المنتجات</a>
-                    <a href="/orders" class="{{ request()->is('orders*') ? 'active' : '' }}">🛒 الطلبات</a>
-                    <a href="/inventory" class="{{ request()->is('inventory*') ? 'active' : '' }}">📈 المخزون</a>
+                    <a href="/dashboard">📊 @lang('dashboard')</a>
+                    <a href="/users">👥 @lang('users')</a>
+                    <a href="/customers">👤 @lang('customers')</a>
+                    <a href="/products">📦 @lang('products')</a>
+                    <a href="/orders">🛒 @lang('orders')</a>
+                    <a href="/inventory">📈 @lang('inventory')</a>
                     <form method="POST" action="/logout">
                         @csrf
-                        <button type="submit" class="logout-btn">🚪 تسجيل خروج</button>
+                        <button type="submit" class="logout-btn">🚪 @lang('logout')</button>
                     </form>
                 </nav>
             </div>
-            <div class="col-md-10 p-3">
+            @endauth
+            <div class="{{ auth()->check() ? 'col-md-10' : 'col-md-12' }} p-3">
+                @auth
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>@yield('page_title', 'لوحة التحكم')</h5>
-                    <small class="text-muted">👤 {{ auth()->user()->name ?? 'ضيف' }}</small>
+                    <h5>@yield('page_title', __('dashboard'))</h5>
+                    <div>
+                        <small class="text-muted">👤 {{ auth()->user()->name }}</small>
+                        <a href="/lang/ar" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
+                    </div>
                 </div>
+                @endauth
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
