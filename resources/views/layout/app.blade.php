@@ -8,10 +8,10 @@
     <style>
         body { background: #f4f6f9; }
         .sidebar { background: #fff; min-height: 100vh; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
-        .sidebar a { color: #333; padding: 15px 20px; display: block; text-decoration: none; border-radius: 8px; margin: 2px 8px; }
+        .sidebar a { color: #333; padding: 10px 15px; display: block; text-decoration: none; border-radius: 6px; margin: 2px 5px; font-size: 14px; }
         .sidebar a:hover, .sidebar a.active { background: #4f46e5; color: #fff; }
         .card { border: none; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logout-btn { color: #dc3545; padding: 15px 20px; display: block; text-decoration: none; border-radius: 8px; margin: 2px 8px; border: none; background: none; width: 100%; text-align: start; cursor: pointer; }
+        .logout-btn { color: #dc3545; padding: 10px 15px; display: block; text-decoration: none; border-radius: 6px; margin: 2px 5px; border: none; background: none; width: 100%; text-align: start; cursor: pointer; font-size: 14px; }
         .logout-btn:hover { background: #dc3545; color: #fff; }
     </style>
 </head>
@@ -19,7 +19,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 sidebar p-0">
-                <div class="p-3 border-bottom"><h5 class="m-0">🏢 ERP System</h5></div>
+                <div class="p-2 border-bottom"><h6 class="m-0">🏢 ERP System</h6></div>
                 <nav>
                     <a href="/dashboard" class="{{ request()->is('dashboard') ? 'active' : '' }}">📊 Dashboard</a>
                     <a href="/users" class="{{ request()->is('users*') ? 'active' : '' }}">👥 Users</a>
@@ -29,14 +29,14 @@
                     <a href="/inventory" class="{{ request()->is('inventory*') ? 'active' : '' }}">📈 Inventory</a>
                     <form method="POST" action="/logout">
                         @csrf
-                        <button type="submit" class="sidebar logout-btn w-100 text-start">🚪 تسجيل خروج</button>
+                        <button type="submit" class="logout-btn">🚪 خروج</button>
                     </form>
                 </nav>
             </div>
-            <div class="col-md-10 p-4">
+            <div class="col-md-10 p-3">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4>@yield('page_title', 'Dashboard')</h4>
-                    <span class="text-muted">👤 {{ auth()->user()->name ?? 'Guest' }}</span>
+                    <h5>@yield('page_title', 'Dashboard')</h5>
+                    <small class="text-muted">👤 {{ auth()->user()->name ?? 'Guest' }}</small>
                 </div>
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
