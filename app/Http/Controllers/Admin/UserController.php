@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $users = User::when($request->search, fn($q, $s) => $q->where('name', 'like', "%$s%"))->paginate(10);
