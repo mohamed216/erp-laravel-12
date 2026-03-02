@@ -4,7 +4,15 @@
 <div class="card">
     <div class="card-header">
         <h4>Order #{{ $order->order_number }}</h4>
-        <span class="badge bg-{{ $order->status == 'completed' ? 'success' : 'warning' }}">{{ $order->status }}</span>
+        @if($order->status == 'completed')
+            <span class="badge bg-success">✅ Completed</span>
+        @elseif($order->status == 'cancelled')
+            <span class="badge bg-danger">❌ Cancelled</span>
+        @elseif($order->status == 'processing')
+            <span class="badge bg-info">🔄 Processing</span>
+        @else
+            <span class="badge bg-warning">⏳ Pending</span>
+        @endif
     </div>
     <div class="card-body">
         <p><strong>Customer:</strong> {{ $order->customer?->name }}</p>
@@ -23,15 +31,15 @@
             @endforeach
         </table>
         
-        <form method="POST" action="/orders/{{ $order->id }}">@csrf @method('PUT')
-            <label>Status:</label>
-            <select name="status" class="form-control" style="width:auto;display:inline">
-                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-            </select>
-            <button class="btn btn-primary">Update</button>
+        <h5 class="mt-4">تغيير الحالة:</h5>
+        <form method="POST" action="/orders/{{ $order->id }}">
+            @csrf @method('PUT')
+            <div class="btn-group" role="group">
+                <button type="submit" name="status" value="pending" class="btn btn-outline-warning {{ $order->status == 'pending' ? 'active' : '' }}">⏳ Pending</button>
+                <button type="submit" name="status" value="processing" class="btn btn-outline-info {{ $order->status == 'processing' ? 'active' : '' }}">🔄 Processing</button>
+                <button type="submit" name="status" value="completed" class="btn btn-outline-success {{ $order->status == 'completed' ? 'active' : '' }}">✅ Completed</button>
+                <button type="submit" name="status" value="cancelled" class="btn btn-outline-danger {{ $order->status == 'cancelled' ? 'active' : '' }}">❌ Cancelled</button>
+            </div>
         </form>
     </div>
 </div>
