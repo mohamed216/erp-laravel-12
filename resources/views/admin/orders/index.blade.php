@@ -11,8 +11,19 @@
                 <td><a href="/orders/{{ $o->id }}">{{ $o->order_number }}</a></td>
                 <td>{{ $o->customer?->name }}</td>
                 <td>${{ $o->total_amount }}</td>
-                <td><span class="badge bg-{{ $o->status=='completed'?'success':'warning' }}">{{ $o->status }}</span></td>
                 <td>
+                    <form method="POST" action="/orders/{{ $o->id }}" class="d-inline" style="display:inline">
+                        @csrf @method('PUT')
+                        <select name="status" onchange="this.form.submit()" style="width:120px" class="form-control form-control-sm">
+                            <option value="pending" {{ $o->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="processing" {{ $o->status == 'processing' ? 'selected' : '' }}>Processing</option>
+                            <option value="completed" {{ $o->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                            <option value="cancelled" {{ $o->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                        </select>
+                    </form>
+                </td>
+                <td>
+                    <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-info">View</a>
                     <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">@csrf @method('DELETE')
                         <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">X</button>
                     </form>
