@@ -30,7 +30,7 @@
                         @else
                             <span class="badge bg-warning">⏳ Pending</span>
                         @endif
-                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-outline-primary ms-2">تغيير</a>
+                        
                     </td>
                     <td>
                         <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-info">View</a>
