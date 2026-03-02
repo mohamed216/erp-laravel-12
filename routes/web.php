@@ -9,22 +9,21 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
+// Language switcher - must be outside auth
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['ar', 'en'])) {
+        session(['locale' => $locale]);
+        app()->setLocale($locale);
+    }
+    return back();
+});
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::middleware('language')->group(function () {
-    Route::get('/lang/{locale}', function ($locale) {
-        if (in_array($locale, ['ar', 'en'])) {
-            session(['locale' => $locale]);
-            app()->setLocale($locale);
-        }
-        return back();
-    });
-});
-
-Route::middleware(['auth', 'language'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', fn() => redirect('/dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
