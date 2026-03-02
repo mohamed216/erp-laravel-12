@@ -6,14 +6,14 @@
     <div class="card-body">
         <table class="table">
             <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
-            @foreach($users as u)
+            @foreach($users as $user)
             <tr>
-                <td>{{ $u->id }}</td>
-                <td>{{ $u->name }}</td>
-                <td>{{ $u->email }}</td>
-                <td><span class="badge bg-{{ $$u->role=='Admin'?'danger':'info' }}">{{ $u->role }}</span></td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td><span class="badge bg-danger">{{ $user->role }}</span></td>
                 <td>
-                    <a href="/users/{{ $u->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="/users/{{ $user->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
                 </td>
             </tr>
             @endforeach
