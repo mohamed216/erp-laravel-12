@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-header"><a href="/orders/create" class="btn btn-primary btn-sm">+ New Order</a></div>
     <div class="card-body">
-        <table class="table table-striped">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Order #</th>
@@ -15,9 +15,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($orders as $o)
+                @forelse($orders as $o)
                 <tr>
-                    <td><a href="/orders/{{ $o->id }}">{{ $o->order_number }}</a></td>
+                    <td>{{ $o->order_number }}</td>
                     <td>{{ $o->customer?->name }}</td>
                     <td>${{ $o->total_amount }}</td>
                     <td>
@@ -32,15 +32,12 @@
                         @endif
                     </td>
                     <td>
-                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-primary">تعديل</a>
-                        @if($o->status != 'completed')
-                        <form method="POST" action="/orders/{{ $o->id }}" class="d-inline">@csrf @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">X</button>
-                        </form>
-                        @endif
+                        <a href="/orders/{{ $o->id }}" class="btn btn-sm btn-primary">Edit</a>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr><td colspan="5" class="text-center">No orders</td></tr>
+                @endforelse
             </tbody>
         </table>
     </div>
