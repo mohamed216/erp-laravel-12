@@ -7,7 +7,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
     'timezone' => 'UTC',
     'locale' => 'ar',
-    'fallback_locale' => 'ar',
+    'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
