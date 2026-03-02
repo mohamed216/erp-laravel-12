@@ -11,8 +11,8 @@
         .sidebar a { color: #333; padding: 15px 20px; display: block; text-decoration: none; border-radius: 8px; margin: 2px 8px; }
         .sidebar a:hover, .sidebar a.active { background: #4f46e5; color: #fff; }
         .card { border: none; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logout-btn { color: #dc3545 !important; }
-        .logout-btn:hover { background: #dc3545 !important; color: #fff !important; }
+        .logout-btn { color: #dc3545; padding: 15px 20px; display: block; text-decoration: none; border-radius: 8px; margin: 2px 8px; border: none; background: none; width: 100%; text-align: start; cursor: pointer; }
+        .logout-btn:hover { background: #dc3545; color: #fff; }
     </style>
 </head>
 <body>
@@ -27,7 +27,7 @@
                     <a href="/products" class="{{ request()->is('products*') ? 'active' : '' }}">📦 Products</a>
                     <a href="/orders" class="{{ request()->is('orders*') ? 'active' : '' }}">🛒 Orders</a>
                     <a href="/inventory" class="{{ request()->is('inventory*') ? 'active' : '' }}">📈 Inventory</a>
-                    <form method="POST" action="/logout" class="d-inline">
+                    <form method="POST" action="/logout">
                         @csrf
                         <button type="submit" class="sidebar logout-btn w-100 text-start">🚪 تسجيل خروج</button>
                     </form>
