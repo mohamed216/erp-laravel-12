@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'sku', 'price', 'description'];
-    protected $casts = ['price' => 'decimal:2'];
+    protected $fillable = ['name', 'sku', 'price', 'cost_price', 'description'];
+    protected $casts = ['price' => 'decimal:2', 'cost_price' => 'decimal:2'];
 
     public function inventory()
     {
@@ -17,5 +17,10 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function getProfitAttribute()
+    {
+        return $this->price - ($this->cost_price ?? 0);
     }
 }

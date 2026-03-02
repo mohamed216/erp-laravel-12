@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('products')->insert([
-            ['name' => 'Laptop', 'sku' => 'ELEC-001', 'price' => 999.99],
-            ['name' => 'Smartphone', 'sku' => 'ELEC-002', 'price' => 599.99],
-            ['name' => 'T-Shirt', 'sku' => 'CLTH-001', 'price' => 29.99],
+            ['name' => 'Laptop', 'sku' => 'ELEC-001', 'price' => 999.99, 'cost_price' => 700.00],
+            ['name' => 'Smartphone', 'sku' => 'ELEC-002', 'price' => 599.99, 'cost_price' => 400.00],
+            ['name' => 'T-Shirt', 'sku' => 'CLTH-001', 'price' => 29.99, 'cost_price' => 15.00],
         ]);
 
         DB::table('inventories')->insert([
