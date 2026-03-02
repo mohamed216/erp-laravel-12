@@ -8,8 +8,16 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function showLogin()
     {
+        if (Auth::check()) {
+            return redirect('/dashboard');
+        }
         return view('auth.login');
     }
 
@@ -22,7 +30,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $r->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with('success', 'Welcome back!');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
