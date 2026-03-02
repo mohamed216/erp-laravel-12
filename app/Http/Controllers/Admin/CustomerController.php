@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $r)
     {
         $customers = Customer::when($r->search, fn($q, $s) => $q->where('name', 'like', "%$s%"))->paginate(10);

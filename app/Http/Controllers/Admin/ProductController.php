@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $r)
     {
         $products = Product::with('inventory')->when($r->search, fn($q, $s) => $q->where('name', 'like', "%$s%"))->paginate(10);
