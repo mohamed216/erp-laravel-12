@@ -18,8 +18,8 @@
         <h3 class="text-center mb-4">🏢 ERP System</h3>
         <h5 class="text-center mb-4">تسجيل الدخول</h5>
         
-        @if($errors->any())
-            <div class="alert alert-danger">{{ $errors->first() }}</div>
+        @if(errors->any())
+            <div class="alert alert-danger">{{ errors->first() }}</div>
         @endif
 
         <form method="POST" action="/login">
