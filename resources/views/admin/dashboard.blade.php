@@ -46,7 +46,7 @@
             <div class="card-body">
                 <table class="table">
                     <tr><td>Net Profit</td><td><strong class="text-{{ $stats['net_profit'] >= 0 ? 'success' : 'danger' }}">{{ number_format($stats['net_profit'], 2) }}</strong></td></tr>
-                    <tr></td><td<td>Total Orders><strong>{{ $stats['orders'] }}</strong></td></tr>
+                    <tr><td<td>Total Orders><strong>{{ $stats['orders'] }}</strong></td></tr>
                     <tr><td>Customers</td><td><strong>{{ $stats['customers'] }}</strong></td></tr>
                 </table>
             </div>
