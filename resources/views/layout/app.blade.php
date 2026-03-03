@@ -2,8 +2,7 @@
 <html lang="{{ session('locale', 'ar') }}" dir="{{ session('locale', 'ar') == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>@yield('title', 'ERP System')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     @if(session('locale', 'ar') == 'ar')
@@ -13,51 +12,45 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        @media (max-width: 768px) {
-            .col-md-2 { width: 100% !important; position: relative !important; }
-            .col-md-10 { width: 100% !important; }
-            .sidebar-custom { min-height: auto !important; }
-            .menu-item { padding: 8px 10px !important; font-size: 12px !important; }
-            .stat-card h2 { font-size: 18px !important; }
-            .stat-card { padding: 10px !important; }
-            .navbar-custom { padding: 8px !important; }
-            .user-badge { font-size: 11px !important; padding: 3px 8px !important; }
-        }
-        @media (max-width: 480px) {
-            .hide-mobile { display: none !important; }
-            .stat-card h4 { font-size: 14px !important; }
-        }
-        :root { --primary: #4361ee; --secondary: #3f37c9; }
-        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+        :root { --primary: #4361ee; --secondary: #3730a3; }
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; margin: 0; }
         .navbar-custom { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 12px 20px; }
         .navbar-custom .navbar-brand { color: white; font-weight: bold; }
         .sidebar-custom { background: white; min-height: 100vh; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .sidebar-custom .menu-item { padding: 12px 20px; color: var(--dark); text-decoration: none; display: block; border-left: 3px solid transparent; transition: 0.3s; }
+        .sidebar-custom .menu-item { padding: 12px 20px; color: var(--dark); text-decoration: none; display: block; border-left: 3px solid transparent; transition: 0.3s; font-size: 14px; }
         .sidebar-custom .menu-item:hover, .sidebar-custom .menu-item.active { background: #f8f9fa; border-left-color: var(--primary); color: var(--primary); }
         .user-badge { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; color: white; }
-        
         .custom-alert { padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s ease; border: none; }
         .custom-alert i { font-size: 20px; }
-        .custom-alert .btn-close { filter: invert(1); opacity: 0.7; }
-        .alert-success-custom { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-        .alert-error-custom { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
-        .alert-warning-custom { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-        .alert-info-custom { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+        .alert-success-custom { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .alert-error-custom { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
         @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar-toggle { display: block !important; }
+            .sidebar-custom { display: none; position: fixed; z-index: 1000; width: 70%; }
+            .sidebar-custom.show { display: block; }
+            .col-md-10 { width: 100% !important; }
+            .stat-card { margin-bottom: 10px; }
+            .stat-card h2 { font-size: 20px; }
+            .hide-mobile { display: none !important; }
+            .table { font-size: 12px; }
+        }
+        .sidebar-toggle { display: none; }
     </style>
 </head>
-    <script>
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js");
-    </script>
 <body>
     @auth
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <nav class="navbar navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/dashboard"><img src="/images/logo.svg" height="30" class="me-2"><i class="fas fa-building"></i> ERP System</a>
-            <div class="d-flex align-items-center gap-3">
+            <button class="sidebar-toggle btn btn-light" onclick="document.querySelector('.sidebar-custom').classList.toggle('show')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/dashboard"><img src="/images/logo.svg" height="30" class="me-2">ERP</a>
+            <div class="d-flex align-items-center gap-2">
                 <a href="/setlang/en" class="user-badge text-decoration-none {{ session('locale') != 'ar' ? 'bg-warning text-dark' : '' }}">EN</a>
-                <a href="/setlang/ar" class="user-badge text-decoration-none {{ session('locale') == 'ar' ? 'bg-warning text-dark' : '' }}">العربية</a>
-                <span class="user-badge"><i class="fas fa-user"></i> {{ auth()->user()->name }}</span>
+                <a href="/setlang/ar" class="user-badge text-decoration-none {{ session('locale') == 'ar' ? 'bg-warning text-dark' : '' }}">ع</a>
                 <form method="POST" action="/logout">@csrf<button type="submit" class="btn btn-sm btn-light"><i class="fas fa-sign-out-alt"></i></button></form>
             </div>
         </div>
@@ -69,43 +62,27 @@
             <?php $role = auth()->user()->role; ?>
             <div class="col-md-2 sidebar-custom p-0">
                 <nav class="mt-3">
-                    <a href="/dashboard" class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}"><i class="fas fa-home"></i> {{ session('locale') == 'en' ? 'Dashboard' : 'الرئيسية' }}</a>
-                    <a href="/notifications" class="menu-item {{ request()->is('notifications*') ? 'active' : '' }}"><i class="fas fa-bell"></i> {{ session('locale') == 'en' ? 'Alerts' : 'التنبيهات' }}</a>
-                    <a href="/pos" class="menu-item {{ request()->is('pos*') ? 'active' : '' }}"><i class="fas fa-cash-register"></i> {{ session('locale') == 'en' ? 'POS' : 'نقطة البيع' }}</a>
-                    <a href="/bank-accounts" class="menu-item {{ request()->is("bank-accounts*") ? "active" : "" }}"><i class="fas fa-university"></i> {{ session("locale") == "en" ? "Banks" : "البنوك" }}</a>
-                    <a href="/backup" class="menu-item {{ request()->is('backup*') ? 'active' : '' }}"><i class="fas fa-database"></i> {{ session('locale') == 'en' ? 'Backup' : 'النسخ' }}</a>
+                    <a href="/dashboard" class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="/notifications" class="menu-item {{ request()->is('notifications*') ? 'active' : '' }}"><i class="fas fa-bell"></i> Alerts</a>
+                    <a href="/pos" class="menu-item {{ request()->is('pos*') ? 'active' : '' }}"><i class="fas fa-cash-register"></i> POS</a>
                     @if($role == 'admin')
-                    <div class="mt-3 px-3 text-muted small">ADMIN</div>
-                    <a href="/users" class="menu-item {{ request()->is('users*') ? 'active' : '' }}"><i class="fas fa-users"></i> {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
-                    <a href="/employees" class="menu-item {{ request()->is("employees*") ? "active" : "" }}"><i class="fas fa-user-tie"></i> {{ session("locale") == "en" ? "Employees" : "الموظفين" }}</a>
-                    <a href="/settings" class="menu-item {{ request()->is('settings*') ? 'active' : '' }}"><i class="fas fa-cog"></i> {{ session('locale') == 'en' ? 'Settings' : 'الإعدادات' }}</a>
+                    <a href="/users" class="menu-item {{ request()->is('users*') ? 'active' : '' }}"><i class="fas fa-users"></i> Users</a>
+                    <a href="/settings" class="menu-item {{ request()->is('settings*') ? 'active' : '' }}"><i class="fas fa-cog"></i> Settings</a>
                     @endif
                     @if(in_array($role, ['admin', 'manager']))
-                    <div class="mt-3 px-3 text-muted small">MANAGEMENT</div>
-                    <a href="/customers" class="menu-item {{ request()->is('customers*') ? 'active' : '' }}"><i class="fas fa-user-tie"></i> {{ session('locale') == 'en' ? 'Customers' : 'العملاء' }}</a>
-                    <a href="/products" class="menu-item {{ request()->is('products*') ? 'active' : '' }}"><i class="fas fa-box"></i> {{ session('locale') == 'en' ? 'Products' : 'المنتجات' }}</a>
-                    <a href="/categories" class="menu-item {{ request()->is('categories*') ? 'active' : '' }}"><i class="fas fa-tags"></i> {{ session('locale') == 'en' ? 'Categories' : 'التصنيفات' }}</a>
-                    <a href="/purchase-orders" class="menu-item {{ request()->is("purchase-orders*") ? "active" : "" }}"><i class="fas fa-shopping-bag"></i> {{ session("locale") == "en" ? "Purchase Orders" : "أوامر الشراء" }}</a>
-                    <a href="/suppliers" class="menu-item {{ request()->is('suppliers*') ? 'active' : '' }}"><i class="fas fa-truck"></i> {{ session('locale') == 'en' ? 'Suppliers' : 'الموردين' }}</a>
-                    <a href="/invoices" class="menu-item {{ request()->is('invoices*') ? 'active' : '' }}"><i class="fas fa-file-invoice"></i> {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
-                    <a href="/expenses" class="menu-item {{ request()->is('expenses*') ? 'active' : '' }}"><i class="fas fa-money-bill"></i> {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>
-                    <div class="mt-3 px-3 text-muted small">REPORTS</div>
-                    <a href="/charts" class="menu-item {{ request()->is("charts*") ? "active" : "" }}"><i class="fas fa-chart-pie"></i> {{ session("locale") == "en" ? "Analytics" : "التحليلات" }}</a>
-                    <a href="/goals" class="menu-item {{ request()->is("goals*") ? "active" : "" }}"><i class="fas fa-trophy"></i> {{ session("locale") == "en" ? "Goals" : "الأهداف" }}</a>
-                    <a href="/budgets" class="menu-item {{ request()->is("budgets*") ? "active" : "" }}"><i class="fas fa-calculator"></i> {{ session("locale") == "en" ? "Budget" : "الميزانية" }}</a>
-                    <a href="/reports/sales" class="menu-item {{ request()->is('reports*') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> {{ session('locale') == 'en' ? 'Reports' : 'التقارير' }}</a>
+                    <a href="/customers" class="menu-item {{ request()->is('customers*') ? 'active' : '' }}"><i class="fas fa-user-tie"></i> Customers</a>
+                    <a href="/products" class="menu-item {{ request()->is('products*') ? 'active' : '' }}"><i class="fas fa-box"></i> Products</a>
+                    <a href="/orders" class="menu-item {{ request()->is('orders*') ? 'active' : '' }}"><i class="fas fa-shopping-cart"></i> Orders</a>
+                    <a href="/invoices" class="menu-item {{ request()->is('invoices*') ? 'active' : '' }}"><i class="fas fa-file-invoice"></i> Invoices</a>
+                    <a href="/expenses" class="menu-item {{ request()->is('expenses*') ? 'active' : '' }}"><i class="fas fa-money-bill"></i> Expenses</a>
                     @endif
-                    <div class="mt-3 px-3 text-muted small">OPERATIONS</div>
-                    <a href="/orders" class="menu-item {{ request()->is('orders*') ? 'active' : '' }}"><i class="fas fa-shopping-cart"></i> {{ session('locale') == 'en' ? 'Orders' : 'الطلبات' }}</a>
-                    <a href="/inventory" class="menu-item {{ request()->is('inventory*') ? 'active' : '' }}"><i class="fas fa-warehouse"></i> {{ session('locale') == 'en' ? 'Inventory' : 'المخزون' }}</a>
+                    <a href="/inventory" class="menu-item {{ request()->is('inventory*') ? 'active' : '' }}"><i class="fas fa-warehouse"></i> Inventory</a>
                 </nav>
             </div>
             @endauth
-            <div class="{{ auth()->check() ? 'col-md-10' : 'col-md-12' }} p-4">
-                @if(session('success'))<div class="custom-alert alert-success-custom"><i class="fas fa-check-circle"></i><span>{{ session('success') }}</span><button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button></div>@endif
-                @if(session('error'))<div class="custom-alert alert-error-custom"><i class="fas fa-exclamation-circle"></i><span>{{ session('error') }}</span><button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button></div>@endif
-                @if(session('warning'))<div class="custom-alert alert-warning-custom"><i class="fas fa-exclamation-triangle"></i><span>{{ session('warning') }}</span><button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button></div>@endif
-                @if(session('info'))<div class="custom-alert alert-info-custom"><i class="fas fa-info-circle"></i><span>{{ session('info') }}</span><button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button></div>@endif
+            <div class="{{ auth()->check() ? 'col-md-10' : 'col-md-12' }} p-3">
+                @if(session('success'))<div class="custom-alert alert-success-custom"><i class="fas fa-check-circle"></i><span>{{ session('success') }}</span></div>@endif
+                @if(session('error'))<div class="custom-alert alert-error-custom"><i class="fas fa-exclamation-circle"></i><span>{{ session('error') }}</span></div>@endif
                 @yield('content')
             </div>
         </div>
