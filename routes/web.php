@@ -31,6 +31,8 @@ Route::get('/setlang/{locale}', function ($locale) {
 })->name('setlang');
 
 // Login routes
+Route::get('/notifications/stream', [AppHttpControllersNotificationSSEController::class, 'stream']);
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -79,4 +81,4 @@ Route::get('/notifications', [NotificationController::class, 'index']);
 });
 use App\Http\Controllers\Admin\ChartsController;
 use App\Http\Controllers\NotificationSSEController;
-Route::get('/notifications/stream', [NotificationSSEController::class, 'stream']);
+Route::get('/notifications/stream', [AppHttpControllersNotificationSSEController::class, 'stream']); [NotificationSSEController::class, 'stream']);
