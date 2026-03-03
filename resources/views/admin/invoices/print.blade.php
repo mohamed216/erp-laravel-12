@@ -7,15 +7,11 @@
 </head>
 <body>
     <div class="invoice">
-        <div class="invoice-header">
-            <div>
-                <div class="invoice-title">INVOICE</div>
-                <p>#{{ $invoice->invoice_number }}</p>
-            </div>
-            <div class="text-end">
-                <img src="/images/logo.svg" height="40" class="me-2"><h4>ERP System</h4>
-                <p>Date: {{ $invoice->created_at->format('Y-m-d') }}</p>
-            </div>
+        <div class="invoice-header text-center mb-4">
+            <img src="/images/logo.svg" height="60" class="mb-3">
+            <h2 style="color:#4361ee;margin:0">ERP System</h2>
+            <p style="margin:0">Invoice #{{ $invoice->invoice_number }}</p>
+            <p>Date: {{ $invoice->created_at->format('Y-m-d') }}</p>
         </div>
         
         <div class="row mb-4">
