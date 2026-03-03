@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         @if(session('success'))
-            <div class="alert alertsuccess') }}</div-success">{{ session('>
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
@@ -40,7 +40,7 @@
                             </a>
                             <form method="POST" action="/backup/restore/{{ $file }}" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('⚠️ Warning: This will replace ALL data! Continue?')">
+                                <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('Warning: This will replace ALL data! Continue?')">
                                     <i class="fas fa-upload"></i> Restore
                                 </button>
                             </form>
