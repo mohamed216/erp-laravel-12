@@ -39,7 +39,7 @@
     @auth
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/dashboard"><i class="fas fa-building"></i> ERP System</a>
+            <a class="navbar-brand" href="/dashboard"><img src="/images/logo.svg" height="30" class="me-2"><i class="fas fa-building"></i> ERP System</a>
             <div class="d-flex align-items-center gap-3">
                 <a href="/setlang/en" class="user-badge text-decoration-none {{ session('locale') != 'ar' ? 'bg-warning text-dark' : '' }}">EN</a>
                 <a href="/setlang/ar" class="user-badge text-decoration-none {{ session('locale') == 'ar' ? 'bg-warning text-dark' : '' }}">العربية</a>
