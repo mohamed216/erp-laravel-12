@@ -38,7 +38,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::post('/settings', [SettingsController::class, 'update']);
-    Route::get('/backup', [BackupController::class, 'index']);
+    Route::resource('bank-accounts', BankAccountController::class)->only(['index', 'store', 'destroy']);
+Route::get('/backup', [BackupController::class, 'index']);
     Route::post('/backup/create', [BackupController::class, 'create']);
     Route::get('/backup/download/{file}', [BackupController::class, 'download']);
     Route::post('/backup/restore/{file}', [BackupController::class, 'restore']);

@@ -54,6 +54,7 @@
                     <a href="/dashboard" class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}"><i class="fas fa-home"></i> {{ session('locale') == 'en' ? 'Dashboard' : 'الرئيسية' }}</a>
                     <a href="/notifications" class="menu-item {{ request()->is('notifications*') ? 'active' : '' }}"><i class="fas fa-bell"></i> {{ session('locale') == 'en' ? 'Alerts' : 'التنبيهات' }}</a>
                     <a href="/pos" class="menu-item {{ request()->is('pos*') ? 'active' : '' }}"><i class="fas fa-cash-register"></i> {{ session('locale') == 'en' ? 'POS' : 'نقطة البيع' }}</a>
+                    <a href="/bank-accounts" class="menu-item {{ request()->is("bank-accounts*") ? "active" : "" }}"><i class="fas fa-university"></i> {{ session("locale") == "en" ? "Banks" : "البنوك" }}</a>
                     <a href="/backup" class="menu-item {{ request()->is('backup*') ? 'active' : '' }}"><i class="fas fa-database"></i> {{ session('locale') == 'en' ? 'Backup' : 'النسخ' }}</a>
                     @if($role == 'admin')
                     <div class="mt-3 px-3 text-muted small">ADMIN</div>
