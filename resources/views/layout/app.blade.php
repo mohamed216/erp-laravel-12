@@ -13,6 +13,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        @media (max-width: 768px) {
+            .col-md-2 { width: 100% !important; position: relative !important; }
+            .col-md-10 { width: 100% !important; }
+            .sidebar-custom { min-height: auto !important; }
+            .menu-item { padding: 8px 10px !important; font-size: 12px !important; }
+            .stat-card h2 { font-size: 18px !important; }
+            .stat-card { padding: 10px !important; }
+            .navbar-custom { padding: 8px !important; }
+            .user-badge { font-size: 11px !important; padding: 3px 8px !important; }
+        }
+        @media (max-width: 480px) {
+            .hide-mobile { display: none !important; }
+            .stat-card h4 { font-size: 14px !important; }
+        }
         :root { --primary: #4361ee; --secondary: #3f37c9; }
         body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
         .navbar-custom { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 12px 20px; }
