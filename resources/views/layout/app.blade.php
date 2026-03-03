@@ -59,6 +59,7 @@
                     <a href="/reports/expenses">💸 {{ session('locale') == 'en' ? 'Expenses Report' : 'تقرير المصروفات' }}</a>
                     <a href="/reports/profit">💵 {{ session('locale') == 'en' ? 'Profit Report' : 'تقرير الأرباح' }}</a>
                     
+                    <a href="/backup">💾 {{ session("locale") == "en" ? "Backup" : "نسخ احتياطي" }}</a>
                     <a href="/settings">⚙️ {{ session('locale') == 'en' ? 'Settings' : 'الإعدادات' }}</a>
                     @endif
                     
