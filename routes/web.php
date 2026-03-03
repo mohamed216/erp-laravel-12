@@ -78,3 +78,7 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('budgets', BudgetController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::get('/charts', [ChartsController::class, 'index']);
 });
+use App\Http\Controllers\Auth2FAController;
+Route::get('/2fa/verify', [Auth2FAController::class, 'showVerify']);
+Route::post('/2fa/verify', [Auth2FAController::class, 'verify']);
+Route::post('/2fa/setup', [Auth2FAController::class, 'setup']);
