@@ -13,7 +13,7 @@
                 <p>#{{ $invoice->invoice_number }}</p>
             </div>
             <div class="text-end">
-                <h4>ERP System</h4>
+                <img src="/images/logo.svg" height="40" class="me-2"><h4>ERP System</h4>
                 <p>Date: {{ $invoice->created_at->format('Y-m-d') }}</p>
             </div>
         </div>
