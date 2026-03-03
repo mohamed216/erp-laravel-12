@@ -23,6 +23,7 @@
     <div class="container-fluid">
         <div class="row">
             @auth
+            <?php $role = auth()->user()->role; ?>
             <div class="col-md-2 sidebar p-0">
                 <div class="p-2 border-bottom d-flex justify-content-between align-items-center">
                     <h6 class="m-0">🏢 ERP</h6>
@@ -30,15 +31,23 @@
                 </div>
                 <nav>
                     <a href="/dashboard">📊 {{ session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم' }}</a>
+                    
+                    @if($role == 'admin')
                     <a href="/users">👥 {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
+                    @endif
+                    
+                    @if(in_array($role, ['admin', 'manager']))
                     <a href="/customers">👤 {{ session('locale') == 'en' ? 'Customers' : 'العملاء' }}</a>
                     <a href="/products">📦 {{ session('locale') == 'en' ? 'Products' : 'المنتجات' }}</a>
                     <a href="/categories">🏷️ {{ session('locale') == 'en' ? 'Categories' : 'التصنيفات' }}</a>
                     <a href="/suppliers">🚚 {{ session('locale') == 'en' ? 'Suppliers' : 'الموردين' }}</a>
-                    <a href="/orders">🛒 {{ session('locale') == 'en' ? 'Orders' : 'الطلبات' }}</a>
                     <a href="/invoices">📄 {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
                     <a href="/expenses">💸 {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>
+                    @endif
+                    
+                    <a href="/orders">🛒 {{ session('locale') == 'en' ? 'Orders' : 'الطلبات' }}</a>
                     <a href="/inventory">📈 {{ session('locale') == 'en' ? 'Inventory' : 'المخزون' }}</a>
+                    
                     <form method="POST" action="/logout">
                         @csrf
                         <button type="submit" class="logout-btn">🚪 {{ session('locale') == 'en' ? 'Logout' : 'تسجيل خروج' }}</button>
@@ -51,7 +60,10 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5>@yield('page_title', session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم')</h5>
                     <div>
-                        <small class="text-muted">👤 {{ auth()->user()->name }}</small>
+                        <span class="badge bg-{{ $role == 'admin' ? 'danger' : ($role == 'manager' ? 'info' : 'secondary') }}">
+                            {{ $role }}
+                        </span>
+                        <small class="text-muted ms-2">👤 {{ auth()->user()->name }}</small>
                         <a href="/setlang/ar" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
                     </div>
                 </div>
