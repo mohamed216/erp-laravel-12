@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
     <title>@yield('title', 'ERP System')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     @if(session('locale', 'ar') == 'ar')
@@ -31,6 +32,9 @@
         @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
+    <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js");
+    </script>
 <body>
     @auth
     <nav class="navbar navbar-expand-lg navbar-custom">
