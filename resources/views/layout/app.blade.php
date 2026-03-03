@@ -17,6 +17,7 @@
         .card { border: none; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .logout-btn { color: #dc3545; padding: 10px 15px; display: block; text-decoration: none; border-radius: 6px; margin: 2px 5px; border: none; background: none; width: 100%; text-align: start; cursor: pointer; font-size: 14px; }
         .logout-btn:hover { background: #dc3545; color: #fff; }
+        .flag-btn { padding: 5px 10px; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -27,11 +28,14 @@
             <div class="col-md-2 sidebar p-0">
                 <div class="p-2 border-bottom d-flex justify-content-between align-items-center">
                     <h6 class="m-0">🏢 ERP</h6>
-                    <a href="/setlang/en" class="btn btn-sm btn-outline-secondary">EN</a>
+                    <div>
+                        <a href="/setlang/en" class="flag-btn" title="English">🇺🇸</a>
+                        <a href="/setlang/ar" class="flag-btn" title="العربية">🇸🇦</a>
+                    </div>
                 </div>
                 <nav>
                     <a href="/dashboard">📊 {{ session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم' }}</a>
-                    <a href="/pos">💰 POS</a>
+                    <a href="/pos">💰 {{ session('locale') == 'en' ? 'POS' : 'نقطة بيع' }}</a>
                     
                     @if($role == 'admin')
                     <a href="/users">👥 {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
@@ -73,7 +77,6 @@
                             {{ $role }}
                         </span>
                         <small class="text-muted ms-2">👤 {{ auth()->user()->name }}</small>
-                        <a href="/setlang/ar" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
                     </div>
                 </div>
                 @endauth
