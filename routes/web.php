@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\BankAccountController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\Admin\ChartsController;
+use App\Http\Controllers\Admin\GoalController;
+use App\Http\Controllers\Admin\BudgetController;
 use App\Http\Controllers\NotificationSSEController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
