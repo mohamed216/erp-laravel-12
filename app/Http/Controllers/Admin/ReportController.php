@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Expense;
 use App\Models\Product;
-use App\Models\Inventory;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
     public function sales(Request $r)
     {
-        $fromfrom ?? date('Y-m- = $r->01');
+        $from = $r->from ?? date('Y-m-01');
         $to = $r->to ?? date('Y-m-d');
         
         $orders = Order::whereBetween('created_at', [$from, $to])
@@ -59,9 +58,7 @@ class ReportController extends Controller
         $expenses = Expense::whereBetween('date', [$from, $to])->get();
         $total = $expenses->sum('amount');
         
-        $byCategory = $expenses->groupBy('category')->map(fn($e) => $e->sum('amount'));
-        
-        return view('admin.reports.expenses', compact('expenses', 'total', 'byCategory', 'from', 'to'));
+        return view('admin.reports.expenses', compact('expenses', 'total', 'from', 'to'));
     }
     
     public function profit(Request $r)
