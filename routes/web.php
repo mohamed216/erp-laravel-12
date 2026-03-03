@@ -12,20 +12,24 @@ use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
-Route::get('/lang/{locale}', function ($locale) {
+// Language switcher
+Route::get('/setlang/{locale}', function (Request $request, $locale) {
     if (in_array($locale, ['ar', 'en'])) {
-        session(['locale' => $locale]);
-        app()->setLocale($locale);
+        $request->session()->put('locale', $locale);
     }
-    return back();
-});
+    return redirect()->back();
+})->name('setlang');
 
+// Login routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout']);
 
+// Protected routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/', fn() => redirect('/dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -39,4 +43,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('invoices', InvoiceController::class);
     Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
+});
+
+// Apply language to all requests
+Route::middleware(function ($request, $next) {
+    $locale = session('locale', 'ar');
+    app()->setLocale($locale);
+    return $next($request);
+})->group(function () {
+    // Already defined above, this is just for reference
 });

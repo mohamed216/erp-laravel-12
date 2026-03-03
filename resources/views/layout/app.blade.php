@@ -26,7 +26,7 @@
             <div class="col-md-2 sidebar p-0">
                 <div class="p-2 border-bottom d-flex justify-content-between align-items-center">
                     <h6 class="m-0">🏢 ERP</h6>
-                    <a href="/lang/en" class="btn btn-sm btn-outline-secondary">EN</a>
+                    <a href="{{ route('setlang', 'en') }}" class="btn btn-sm btn-outline-secondary">EN</a>
                 </div>
                 <nav>
                     <a href="/dashboard">📊 @lang('dashboard')</a>
@@ -52,7 +52,7 @@
                     <h5>@yield('page_title', __('dashboard'))</h5>
                     <div>
                         <small class="text-muted">👤 {{ auth()->user()->name }}</small>
-                        <a href="/lang/ar" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
+                        <a href="{{ route('setlang', 'ar') }}" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
                     </div>
                 </div>
                 @endauth
