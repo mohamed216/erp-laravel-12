@@ -72,6 +72,7 @@
                     <a href="/invoices" class="menu-item {{ request()->is('invoices*') ? 'active' : '' }}"><i class="fas fa-file-invoice"></i> {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
                     <a href="/expenses" class="menu-item {{ request()->is('expenses*') ? 'active' : '' }}"><i class="fas fa-money-bill"></i> {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>
                     <div class="mt-3 px-3 text-muted small">REPORTS</div>
+                    <a href="/charts" class="menu-item {{ request()->is("charts*") ? "active" : "" }}"><i class="fas fa-chart-pie"></i> {{ session("locale") == "en" ? "Analytics" : "التحليلات" }}</a>
                     <a href="/reports/sales" class="menu-item {{ request()->is('reports*') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> {{ session('locale') == 'en' ? 'Reports' : 'التقارير' }}</a>
                     @endif
                     <div class="mt-3 px-3 text-muted small">OPERATIONS</div>

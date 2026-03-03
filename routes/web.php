@@ -73,5 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('/pos', [POSController::class, 'index']);
     Route::post('/pos/create', [POSController::class, 'createOrder']);
-    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/charts', [ChartsController::class, 'index']);
+Route::get('/notifications', [NotificationController::class, 'index']);
 });
+use App\Http\Controllers\Admin\ChartsController;
