@@ -15,10 +15,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'language' => \App\Http\Middleware\LanguageMiddleware::class,
+            'security.headers' => \App\Http\Middleware\SecurityHeaders::class,
+            'sanitize' => \App\Http\Middleware\SanitizeInput::class,
         ]);
         
-        $middleware->web(append: [
+        $middleware->web(prepend: [
             \App\Http\Middleware\LanguageMiddleware::class,
+            \App\Http\Middleware\SecurityHeaders::class,
+            \App\Http\Middleware\SanitizeInput::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
