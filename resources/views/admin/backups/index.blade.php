@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alertsuccess') }}</div-success">{{ session('>
         @endif
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
@@ -36,50 +36,22 @@
                         <td>{{ round(filesize($backup) / 1024, 2) }} KB</td>
                         <td>
                             <a href="/backup/download/{{ $file }}" class="btn btn-sm btn-success">
-                                <i class="fas fa-download"></i>
+                                <i class="fas fa-download"></i> Download
                             </a>
-                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#restoreModal{{ $loop->index }}">
-                                <i class="fas fa-upload"></i>
-                            </button>
+                            <form method="POST" action="/backup/restore/{{ $file }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('⚠️ Warning: This will replace ALL data! Continue?')">
+                                    <i class="fas fa-upload"></i> Restore
+                                </button>
+                            </form>
                             <form method="POST" action="/backup/delete/{{ $file }}" class="d-inline">
                                 @csrf
-                                <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this backup?')">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this backup?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </td>
                     </tr>
-                    
-                    <!-- Restore Modal -->
-                    <div class="modal fade" id="restoreModal{{ $loop->index }}" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Restore Backup</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <form method="POST" action="/backup/restore/{{ $file }}">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="alert alert-warning">
-                                            <i class="fas fa-exclamation-triangle"></i> 
-                                            Warning: This will overwrite all current data!
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="confirm" value="yes" id="confirm{{ $loop->index }}">
-                                            <label class="form-check-label" for="confirm{{ $loop->index }}">
-                                                I understand this will replace all data
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-warning">Restore</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </tbody>
             </table>
