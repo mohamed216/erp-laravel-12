@@ -38,6 +38,7 @@
             <div class="col-md-2 sidebar p-0">
                 <nav style="padding-top: 10px;">
                     <a href="/dashboard">📊 {{ session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم' }}</a>
+                    <a href="/notifications">🔔 {{ session("locale") == "en" ? "Alerts" : "التنبيهات" }}</a>
                     <a href="/pos">💰 {{ session('locale') == 'en' ? 'POS' : 'نقطة بيع' }}</a>
                     
                     @if($role == 'admin')

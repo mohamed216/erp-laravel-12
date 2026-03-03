@@ -59,5 +59,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('/pos', [POSController::class, 'index']);
-    Route::post('/pos/create', [POSController::class, 'createOrder']);
+    Route::get('/notifications', [NotificationController::class, 'index']);
+Route::post('/pos/create', [POSController::class, 'createOrder']);
 });
