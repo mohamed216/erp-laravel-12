@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { background: #f4f6f9; }
-        .sidebar { background: #fff; min-height: 100vh; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
+        .sidebar { background: #fff; min-height: 100vh; box-shadow: 2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; max-height: 100vh; }
         .sidebar a { color: #333; padding: 10px 15px; display: block; text-decoration: none; border-radius: 6px; margin: 2px 5px; font-size: 14px; }
         .sidebar a:hover, .sidebar a.active { background: #4f46e5; color: #fff; }
         .card { border: none; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -31,6 +31,7 @@
                 </div>
                 <nav>
                     <a href="/dashboard">📊 {{ session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم' }}</a>
+                    <a href="/pos">💰 POS</a>
                     
                     @if($role == 'admin')
                     <a href="/users">👥 {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
@@ -43,6 +44,14 @@
                     <a href="/suppliers">🚚 {{ session('locale') == 'en' ? 'Suppliers' : 'الموردين' }}</a>
                     <a href="/invoices">📄 {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
                     <a href="/expenses">💸 {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>
+                    
+                    <hr>
+                    <a href="/reports/sales">📈 {{ session('locale') == 'en' ? 'Sales Report' : 'تقرير المبيعات' }}</a>
+                    <a href="/reports/inventory">📦 {{ session('locale') == 'en' ? 'Inventory Report' : 'تقرير المخزون' }}</a>
+                    <a href="/reports/expenses">💸 {{ session('locale') == 'en' ? 'Expenses Report' : 'تقرير المصروفات' }}</a>
+                    <a href="/reports/profit">💵 {{ session('locale') == 'en' ? 'Profit Report' : 'تقرير الأرباح' }}</a>
+                    
+                    <a href="/settings">⚙️ {{ session('locale') == 'en' ? 'Settings' : 'الإعدادات' }}</a>
                     @endif
                     
                     <a href="/orders">🛒 {{ session('locale') == 'en' ? 'Orders' : 'الطلبات' }}</a>
