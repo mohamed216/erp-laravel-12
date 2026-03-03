@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Expense;
