@@ -28,18 +28,25 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout']);
 
-// Protected routes
+// Protected routes - Admin only
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+});
+
+// Protected routes - Manager & Admin
+Route::middleware(['auth', 'role:admin|manager'])->group(function () {
+    Route::resource('customers', CustomerController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('invoices', InvoiceController::class);
+});
+
+// Protected routes - All authenticated
 Route::middleware(['auth'])->group(function () {
     Route::get('/', fn() => redirect('/dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    Route::resource('users', UserController::class);
-    Route::resource('customers', CustomerController::class);
-    Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
-    Route::resource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
-    Route::resource('invoices', InvoiceController::class);
-    Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
-    Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
 });
