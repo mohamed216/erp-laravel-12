@@ -2,48 +2,40 @@
 @section('title', 'Notifications')
 @section('content')
 <style>
-.notification-item {
-    padding: 15px;
-    border-radius: 10px;
+.alert-item {
+    padding: 15px 20px;
+    border-radius: 12px;
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    animation: slideIn 0.3s ease;
+    color: white;
 }
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-.notif-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
-.notif-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-.notif-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-.notif-info { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
 </style>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="card">
-            <div class="card-header"><h5>Real-time Alerts</h5></div>
-            <div class="card-body" id="notifications">
-                <div class="notification-item notif-info">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Connecting to notifications...</span>
-                </div>
+            <div class="card-header d-flex justify-content-between">
+                <h4><i class="fas fa-bell"></i> Stock Alerts</h4>
+                <button class="btn btn-sm btn-primary" onclick="location.reload()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
             </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header"><h4>Low Stock Products</h4></div>
             <div class="card-body">
                 @if($lowStock->count() == 0)
-                    <div class="alert alert-success">All products are well stocked!</div>
+                    <div class="alert alert-success" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">
+                        <i class="fas fa-check-circle"></i> All products are well stocked!
+                    </div>
                 @else
                     @foreach($lowStock as $p)
-                    <div class="alert alert-warning d-flex justify-content-between">
-                        <div><strong>{{ $p->name }}</strong><br><small>Current: {{ $p->inventory?->stock_quantity ?? 0 }}</small></div>
-                        <span class="badge bg-danger">Low</span>
+                    <div class="alert-item" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>{{ $p->name }}</strong>
+                            </div>
+                            <div>
+                                <span class="badge bg-white text-warning">Stock: {{ $p->inventory?->stock_quantity ?? 0 }}</span>
+                            </div>
+                        </div>
                     </div>
                     @endforeach
                 @endif
@@ -52,35 +44,31 @@
     </div>
 </div>
 
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Real-time Notifications (Auto-refresh)</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">
+                    <i class="fas fa-info-circle"></i> 
+                    This page will automatically check for new alerts every 30 seconds.
+                </p>
+                <button class="btn btn-success" onclick="startAutoRefresh()">
+                    <i class="fas fa-play"></i> Start Auto-refresh
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-const notifDiv = document.getElementById('notifications');
-
-function addNotification(type, message) {
-    const div = document.createElement('div');
-    div.className = 'notification-item notif-' + type;
-    div.innerHTML = '<i class="fas fa-' + (type === 'danger' ? 'exclamation-triangle' : (type === 'warning' ? 'box' : 'info-circle')) + '"></i><span>' + message + '</span>';
-    notifDiv.insertBefore(div, notifDiv.firstChild);
-    
-    // Keep only last 5 notifications
-    while (notifDiv.children.length > 5) {
-        notifDiv.removeChild(notifDiv.lastChild);
-    }
+function startAutoRefresh() {
+    setInterval(() => {
+        location.reload();
+    }, 30000); // Refresh every 30 seconds
 }
-
-// Connect to SSE
-const eventSource = new EventSource('/notifications/stream');
-
-eventSource.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    
-    if (data.type === 'low_stock') {
-        addNotification('danger', data.message);
-    }
-};
-
-eventSource.onerror = function() {
-    addNotification('warning', 'Connection lost. Reconnecting...');
-    setTimeout(() => location.reload(), 5000);
-};
+startAutoRefresh();
 </script>
 @endsection
