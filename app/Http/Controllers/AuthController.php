@@ -12,7 +12,7 @@ use App\Models\User;
 class AuthController extends Controller
 {
     protected $maxLoginAttempts = 5;
-    protected $lockoutTime = 300; // 5 minutes
+    protected $lockoutTime = 300;
 
     public function showLogin()
     {
@@ -24,7 +24,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Check rate limiting
         $key = 'login:' . $request->ip();
         if (RateLimiter::tooManyAttempts($key, $this->maxLoginAttempts)) {
             $seconds = RateLimiter::availableIn($key);
@@ -41,21 +40,11 @@ class AuthController extends Controller
         }
 
         $credentials = $request->only('email', 'password');
-        
-        // Add rate limiting attempt
         RateLimiter::hit($key, $this->lockoutTime);
 
         if (Auth::attempt($credentials)) {
-            // Clear rate limit on successful login
             RateLimiter::clear($key);
-            
             $request->session()->regenerate();
-            
-            // Log the login
-            activity()
-                ->causedBy(Auth::user())
-                ->log('User logged in');
-            
             return redirect()->intended('/dashboard')->with('success', 'Welcome back!');
         }
 
@@ -64,13 +53,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Log the logout
-        if (Auth::check()) {
-            activity()
-                ->causedBy(Auth::user())
-                ->log('User logged out');
-        }
-        
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
