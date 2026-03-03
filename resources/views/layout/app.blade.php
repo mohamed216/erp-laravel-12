@@ -67,6 +67,7 @@
                     <a href="/customers" class="menu-item {{ request()->is('customers*') ? 'active' : '' }}"><i class="fas fa-user-tie"></i> {{ session('locale') == 'en' ? 'Customers' : 'العملاء' }}</a>
                     <a href="/products" class="menu-item {{ request()->is('products*') ? 'active' : '' }}"><i class="fas fa-box"></i> {{ session('locale') == 'en' ? 'Products' : 'المنتجات' }}</a>
                     <a href="/categories" class="menu-item {{ request()->is('categories*') ? 'active' : '' }}"><i class="fas fa-tags"></i> {{ session('locale') == 'en' ? 'Categories' : 'التصنيفات' }}</a>
+                    <a href="/purchase-orders" class="menu-item {{ request()->is("purchase-orders*") ? "active" : "" }}"><i class="fas fa-shopping-bag"></i> {{ session("locale") == "en" ? "Purchase Orders" : "أوامر الشراء" }}</a>
                     <a href="/suppliers" class="menu-item {{ request()->is('suppliers*') ? 'active' : '' }}"><i class="fas fa-truck"></i> {{ session('locale') == 'en' ? 'Suppliers' : 'الموردين' }}</a>
                     <a href="/invoices" class="menu-item {{ request()->is('invoices*') ? 'active' : '' }}"><i class="fas fa-file-invoice"></i> {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
                     <a href="/expenses" class="menu-item {{ request()->is('expenses*') ? 'active' : '' }}"><i class="fas fa-money-bill"></i> {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>

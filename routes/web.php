@@ -38,7 +38,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::post('/settings', [SettingsController::class, 'update']);
-    Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('purchase-orders', PurchaseOrderController::class);
+Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'destroy']);
 Route::resource('bank-accounts', BankAccountController::class)->only(['index', 'store', 'destroy']);
 Route::get('/backup', [BackupController::class, 'index']);
     Route::post('/backup/create', [BackupController::class, 'create']);
