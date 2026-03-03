@@ -41,7 +41,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/backup', [BackupController::class, 'index']);
     Route::post('/backup/create', [BackupController::class, 'create']);
     Route::get('/backup/download/{file}', [BackupController::class, 'download']);
-    Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
+    Route::post('/backup/restore/{file}', [BackupController::class, 'restore']);
+Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
 });
 
 // Manager & Admin routes

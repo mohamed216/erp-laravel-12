@@ -26,10 +26,11 @@ class BackupController extends Controller
         }
 
         $tables = DB::select('SHOW TABLES');
+        $dbName = config('database.connections.mysql.database');
         $sql = '';
         
         foreach ($tables as $table) {
-            $tableName = $table->{'Tables_in_' . config('database.connections.mysql.database')};
+            $tableName = $table->{'Tables_in_' . $dbName};
             $sql .= "DROP TABLE IF EXISTS `$tableName`;\n\n";
             
             $create = DB::select("SHOW CREATE TABLE `$tableName`")[0];
@@ -58,6 +59,24 @@ class BackupController extends Controller
             return response()->download($path);
         }
         return back()->with('error', 'File not found');
+    }
+
+    public function restore(Request $r, $file)
+    {
+        $path = storage_path('app/backups/' . $file);
+        
+        if (!file_exists($path)) {
+            return back()->with('error', 'File not found');
+        }
+
+        $r->validate(['confirm' => 'required']);
+
+        try {
+            DB::unprepared(file_get_contents($path));
+            return back()->with('success', 'Database restored successfully from: ' . $file);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Restore failed: ' . $e->getMessage());
+        }
     }
 
     public function delete($file)
