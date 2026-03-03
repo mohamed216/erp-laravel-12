@@ -15,6 +15,9 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\POSController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\BackupController;
+use App\Http\Controllers\Admin\BankAccountController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,14 +41,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::post('/settings', [SettingsController::class, 'update']);
-    Route::resource('purchase-orders', PurchaseOrderController::class);
-Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'destroy']);
-Route::resource('bank-accounts', BankAccountController::class)->only(['index', 'store', 'destroy']);
-Route::get('/backup', [BackupController::class, 'index']);
+    Route::get('/backup', [BackupController::class, 'index']);
     Route::post('/backup/create', [BackupController::class, 'create']);
     Route::get('/backup/download/{file}', [BackupController::class, 'download']);
     Route::post('/backup/restore/{file}', [BackupController::class, 'restore']);
-Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
+    Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
 });
 
 // Manager & Admin routes
@@ -56,6 +56,9 @@ Route::middleware(['auth', 'role:admin|manager'])->group(function () {
     Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
     Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('invoices', InvoiceController::class);
+    Route::resource('bank-accounts', BankAccountController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('purchase-orders', PurchaseOrderController::class);
     Route::get('/reports/sales', [ReportController::class, 'sales']);
     Route::get('/reports/inventory', [ReportController::class, 'inventory']);
     Route::get('/reports/expenses', [ReportController::class, 'expenses']);
