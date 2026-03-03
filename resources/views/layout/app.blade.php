@@ -8,6 +8,7 @@
     @if(app()->getLocale() == 'ar')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     @endif
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { background: #f4f6f9; }
         .sidebar { background: #fff; min-height: 100vh; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
@@ -32,7 +33,11 @@
                     <a href="/users">👥 @lang('users')</a>
                     <a href="/customers">👤 @lang('customers')</a>
                     <a href="/products">📦 @lang('products')</a>
+                    <a href="/categories">🏷️ @lang('categories')</a>
+                    <a href="/suppliers">🚚 @lang('suppliers')</a>
                     <a href="/orders">🛒 @lang('orders')</a>
+                    <a href="/invoices">📄 @lang('invoices')</a>
+                    <a href="/expenses">💸 @lang('expenses')</a>
                     <a href="/inventory">📈 @lang('inventory')</a>
                     <form method="POST" action="/logout">
                         @csrf
