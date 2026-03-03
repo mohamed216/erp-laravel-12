@@ -10,9 +10,9 @@ class LanguageMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (session()->has('locale')) {
-            app()->setLocale(session('locale'));
-        }
+        $locale = session('locale', 'ar');
+        app()->setLocale($locale);
+        
         return $next($request);
     }
 }

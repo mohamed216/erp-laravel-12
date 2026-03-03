@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'language' => \App\Http\Middleware\LanguageMiddleware::class,
         ]);
+        
+        $middleware->web(append: [
+            \App\Http\Middleware\LanguageMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
