@@ -1,12 +1,11 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
-use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\Expense;
-use App\Models\Product;
-use App\Models\Customer;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 class ChartsController extends Controller
 {
     public function index()
@@ -18,10 +17,10 @@ class ChartsController extends Controller
         }
         
         // Top products
-        $topProducts = \DB::table('order_items')
+        $topProducts = DB::table('order_items')
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->selectRaw('products.name, SUM(order_items.quantity) as total_qty')
-            ->groupBy('products.id')
+            ->groupBy('products.id', 'products.name')
             ->orderByDesc('total_qty')
             ->limit(5)
             ->get();
