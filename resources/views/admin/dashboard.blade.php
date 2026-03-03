@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('title', 'Dashboard')
 @section('page_title', session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم')
+@section('content')
 
 <style>
 .stat-card { border-radius: 15px; padding: 20px; color: white; transition: 0.3s; }
@@ -45,11 +46,12 @@
             <div class="card-body">
                 <table class="table">
                     <tr><td>Net Profit</td><td><strong class="text-{{ $stats['net_profit'] >= 0 ? 'success' : 'danger' }}">{{ number_format($stats['net_profit'], 2) }}</strong></td></tr>
-                    <tr><td>Total Orders</td><td><strong>{{ $stats['orders'] }}</strong></td></tr>
+                    <tr></td><td<td>Total Orders><strong>{{ $stats['orders'] }}</strong></td></tr>
                     <tr><td>Customers</td><td><strong>{{ $stats['customers'] }}</strong></td></tr>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
