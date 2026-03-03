@@ -59,6 +59,7 @@
                     @if($role == 'admin')
                     <div class="mt-3 px-3 text-muted small">ADMIN</div>
                     <a href="/users" class="menu-item {{ request()->is('users*') ? 'active' : '' }}"><i class="fas fa-users"></i> {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
+                    <a href="/employees" class="menu-item {{ request()->is("employees*") ? "active" : "" }}"><i class="fas fa-user-tie"></i> {{ session("locale") == "en" ? "Employees" : "الموظفين" }}</a>
                     <a href="/settings" class="menu-item {{ request()->is('settings*') ? 'active' : '' }}"><i class="fas fa-cog"></i> {{ session('locale') == 'en' ? 'Settings' : 'الإعدادات' }}</a>
                     @endif
                     @if(in_array($role, ['admin', 'manager']))
