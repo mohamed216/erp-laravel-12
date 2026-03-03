@@ -74,5 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pos', [POSController::class, 'index']);
     Route::post('/pos/create', [POSController::class, 'createOrder']);
     Route::get('/notifications', [NotificationController::class, 'index']);
-    Route::get('/charts', [ChartsController::class, 'index']);
+    Route::resource('budgets', BudgetController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::get('/charts', [ChartsController::class, 'index']);
 });
