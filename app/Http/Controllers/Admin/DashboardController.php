@@ -1,28 +1,23 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Customer;
-use App\Models\Product;
-use App\Models\Order;
-use App\Models\Invoice;
-use App\Models\Expense;
+use App\Models\User; use App\Models\Customer; use App\Models\Product;
+use App\Models\Order; use App\Models\Expense; use App\Models\Employee;
+use App\Models\Supplier; use App\Models\BankAccount; use App\Models\Inventory;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Stats
-        $inventoryCost = 0;
-        $inventoryValue = 0;
-        foreach (\App\Models\Inventory::with('product')->get() as $inv) {
+        // Orders stats
+        $inventoryCost = 0; $inventoryValue = 0;
+        foreach (Inventory::with('product')->get() as $inv) {
             $inventoryCost += ($inv->product?->cost_price ?? 0) * $inv->stock_quantity;
             $inventoryValue += ($inv->product?->price ?? 0) * $inv->stock_quantity;
         }
 
         $revenue = Order::where('status', 'completed')->sum('total_amount');
+        
         $profit = 0;
         foreach (Order::where('status', 'completed')->with('items')->get() as $order) {
             foreach ($order->items as $item) {
@@ -32,7 +27,9 @@ class DashboardController extends Controller
         }
 
         $expenses = Expense::sum('amount');
-        $netProfit = $profit - $expenses;
+        $employees = Employee::count();
+        $suppliers = Supplier::count();
+        $bankBalance = BankAccount::sum('balance');
 
         $stats = [
             'users' => User::count(),
@@ -42,17 +39,14 @@ class DashboardController extends Controller
             'revenue' => $revenue,
             'profit' => $profit,
             'expenses' => $expenses,
-            'net_profit' => $netProfit,
+            'net_profit' => $profit - $expenses,
             'inventory_cost' => $inventoryCost,
             'inventory_value' => $inventoryValue,
+            'employees' => $employees,
+            'suppliers' => $suppliers,
+            'bank_balance' => $bankBalance,
         ];
 
-        // Chart data
-        $monthlyOrders = Order::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-            ->whereYear('created_at', date('Y'))
-            ->groupBy('month')
-            ->pluck('count', 'month');
-
-        return view('admin.dashboard', compact('stats', 'monthlyOrders'));
+        return view('admin.dashboard', compact('stats'));
     }
 }
