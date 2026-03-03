@@ -12,13 +12,12 @@ use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
 
 // Language switcher
-Route::get('/setlang/{locale}', function (Request $request, $locale) {
+Route::get('/setlang/{locale}', function ($locale) {
     if (in_array($locale, ['ar', 'en'])) {
-        $request->session()->put('locale', $locale);
+        session(['locale' => $locale]);
+        app()->setLocale($locale);
     }
     return redirect()->back();
 })->name('setlang');
@@ -43,13 +42,4 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('invoices', InvoiceController::class);
     Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
-});
-
-// Apply language to all requests
-Route::middleware(function ($request, $next) {
-    $locale = session('locale', 'ar');
-    app()->setLocale($locale);
-    return $next($request);
-})->group(function () {
-    // Already defined above, this is just for reference
 });
