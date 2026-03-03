@@ -78,3 +78,5 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/notifications', [NotificationController::class, 'index']);
 });
 use App\Http\Controllers\Admin\ChartsController;
+use App\Http\Controllers\NotificationSSEController;
+Route::get('/notifications/stream', [NotificationSSEController::class, 'stream']);
