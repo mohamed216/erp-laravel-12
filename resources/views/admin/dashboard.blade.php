@@ -3,7 +3,6 @@
 @section('page_title', __('dashboard'))
 @section('content')
 
-{{-- Basic Stats --}}
 <div class="row mt-4">
     <div class="col-md-2"><div class="card p-3 text-center"><h5>{{ $stats['users'] }}</h5><small>@lang('users')</small></div></div>
     <div class="col-md-2"><div class="card p-3 text-center"><h5>{{ $stats['customers'] }}</h5><small>@lang('customers')</small></div></div>
@@ -13,7 +12,6 @@
     <div class="col-md-2"><div class="card p-3 text-center"><h5>{{ number_format($stats['net_profit'], 0) }}</h5><small>Net Profit</small></div></div>
 </div>
 
-{{-- Financial --}}
 <div class="row mt-4">
     <div class="col-md-3">
         <div class="card p-4 bg-success text-white text-center">
@@ -41,35 +39,27 @@
     </div>
 </div>
 
-{{-- Charts --}}
 <div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card p-4">
-            <h5>Monthly Orders</h5>
-            <canvas id="ordersChart"></canvas>
-        </div>
-    </div>
     <div class="col-md-6">
         <div class="card p-4">
             <h5>Financial Overview</h5>
             <canvas id="financeChart"></canvas>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5>Quick Stats</h5>
+            <table class="table">
+                <tr><td>Inventory Cost</td><td>{{ number_format($stats['inventory_cost'], 2) }}</td></tr>
+                <tr><td>Inventory Value</td><td>{{ number_format($stats['inventory_value'], 2) }}</td></tr>
+                <tr><td>Net Profit</td><td>{{ number_format($stats['net_profit'], 2) }}</td></tr>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const ordersData = months.map((m, i) => {{ $monthlyOrders[(i+1)] ?? 0 }});
-
-new Chart(document.getElementById('ordersChart'), {
-    type: 'bar',
-    data: {
-        labels: months,
-        datasets: [{ label: 'Orders', data: ordersData, backgroundColor: '#4f46e5' }]
-    }
-});
-
 new Chart(document.getElementById('financeChart'), {
     type: 'doughnut',
     data: {
