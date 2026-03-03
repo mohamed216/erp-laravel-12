@@ -42,6 +42,8 @@ class InvoiceController extends Controller
         return view('admin.invoices.show', compact('invoice'));
     }
 
+    public function print(Invoice $invoice) { return view("admin.invoices.print", compact("invoice")); }
+
     public function update(Request $r, Invoice $invoice)
     {
         $invoice->update([

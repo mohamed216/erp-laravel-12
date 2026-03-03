@@ -1,0 +1,11 @@
+@media print {
+    body { background: white; }
+    .no-print { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+    .container-fluid { padding: 0; }
+    .col-md-2 { display: none; }
+    .col-md-10 { width: 100%; }
+}
+.invoice { max-width: 800px; margin: 0 auto; padding: 20px; }
+.invoice-header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.invoice-title { font-size: 24px; font-weight: bold; color: #4361ee; }

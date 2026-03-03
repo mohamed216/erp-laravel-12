@@ -56,6 +56,7 @@ Route::middleware(['auth', 'role:admin|manager'])->group(function () {
     Route::resource('suppliers', SupplierController::class)->only(['index', 'store', 'destroy']);
     Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('invoices', InvoiceController::class);
+Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print']);
     Route::resource('bank-accounts', BankAccountController::class)->only(['index', 'store', 'destroy']);
     Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'destroy']);
     Route::resource('purchase-orders', PurchaseOrderController::class);
