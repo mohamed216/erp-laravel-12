@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\POSController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::post('/settings', [SettingsController::class, 'update']);
+    Route::get('/backup', [BackupController::class, 'index']);
+    Route::post('/backup/create', [BackupController::class, 'create']);
+    Route::get('/backup/download/{file}', [BackupController::class, 'download']);
+    Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
 });
 
 // Manager & Admin routes
@@ -59,10 +65,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('/pos', [POSController::class, 'index']);
-    Route::get('/backup', [BackupController::class, 'index']);
-Route::post('/backup/create', [BackupController::class, 'create']);
-Route::get('/backup/download/{file}', [BackupController::class, 'download']);
-Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
-Route::get('/notifications', [NotificationController::class, 'index']);
-Route::post('/pos/create', [POSController::class, 'createOrder']);
+    Route::post('/pos/create', [POSController::class, 'createOrder']);
+    Route::get('/notifications', [NotificationController::class, 'index']);
 });
