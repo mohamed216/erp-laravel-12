@@ -59,6 +59,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('inventory', InventoryController::class)->except(['show', 'destroy', 'create', 'store']);
     Route::get('/pos', [POSController::class, 'index']);
-    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/backup', [BackupController::class, 'index']);
+Route::post('/backup/create', [BackupController::class, 'create']);
+Route::get('/backup/download/{file}', [BackupController::class, 'download']);
+Route::post('/backup/delete/{file}', [BackupController::class, 'delete']);
+Route::get('/notifications', [NotificationController::class, 'index']);
 Route::post('/pos/create', [POSController::class, 'createOrder']);
 });
