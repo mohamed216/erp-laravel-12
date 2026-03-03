@@ -13,7 +13,8 @@
                 <td>{{ $inv->total_amount }}</td>
                 <td>{{ $inv->paid_amount }}</td>
                 <td><span class="badge bg-{{ $inv->status == 'paid' ? 'success' : 'warning' }}">{{ $inv->status }}</span></td>
-                <td><a href="/invoices/{{ $inv->id }}" class="btn btn-sm btn-info">View</a></td>
+                <td><a href="/invoices/{{ $inv->id }}" class="btn btn-sm btn-info">View</a>
+                            <a href="/invoices/{{ $inv->id }}/print" class="btn btn-sm btn-success" target="_blank">Print</a></td>
             </tr>
             @endforeach
         </table>
