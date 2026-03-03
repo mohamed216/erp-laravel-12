@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="{{ session('locale', 'ar') }}" dir="{{ session('locale', 'ar') == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'ERP System')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    @if(app()->getLocale() == 'ar')
+    @if(session('locale', 'ar') == 'ar')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     @endif
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,22 +26,22 @@
             <div class="col-md-2 sidebar p-0">
                 <div class="p-2 border-bottom d-flex justify-content-between align-items-center">
                     <h6 class="m-0">🏢 ERP</h6>
-                    <a href="{{ route('setlang', 'en') }}" class="btn btn-sm btn-outline-secondary">EN</a>
+                    <a href="/setlang/en" class="btn btn-sm btn-outline-secondary">EN</a>
                 </div>
                 <nav>
-                    <a href="/dashboard">📊 @lang('dashboard')</a>
-                    <a href="/users">👥 @lang('users')</a>
-                    <a href="/customers">👤 @lang('customers')</a>
-                    <a href="/products">📦 @lang('products')</a>
-                    <a href="/categories">🏷️ @lang('categories')</a>
-                    <a href="/suppliers">🚚 @lang('suppliers')</a>
-                    <a href="/orders">🛒 @lang('orders')</a>
-                    <a href="/invoices">📄 @lang('invoices')</a>
-                    <a href="/expenses">💸 @lang('expenses')</a>
-                    <a href="/inventory">📈 @lang('inventory')</a>
+                    <a href="/dashboard">📊 {{ session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم' }}</a>
+                    <a href="/users">👥 {{ session('locale') == 'en' ? 'Users' : 'المستخدمين' }}</a>
+                    <a href="/customers">👤 {{ session('locale') == 'en' ? 'Customers' : 'العملاء' }}</a>
+                    <a href="/products">📦 {{ session('locale') == 'en' ? 'Products' : 'المنتجات' }}</a>
+                    <a href="/categories">🏷️ {{ session('locale') == 'en' ? 'Categories' : 'التصنيفات' }}</a>
+                    <a href="/suppliers">🚚 {{ session('locale') == 'en' ? 'Suppliers' : 'الموردين' }}</a>
+                    <a href="/orders">🛒 {{ session('locale') == 'en' ? 'Orders' : 'الطلبات' }}</a>
+                    <a href="/invoices">📄 {{ session('locale') == 'en' ? 'Invoices' : 'الفواتير' }}</a>
+                    <a href="/expenses">💸 {{ session('locale') == 'en' ? 'Expenses' : 'المصروفات' }}</a>
+                    <a href="/inventory">📈 {{ session('locale') == 'en' ? 'Inventory' : 'المخزون' }}</a>
                     <form method="POST" action="/logout">
                         @csrf
-                        <button type="submit" class="logout-btn">🚪 @lang('logout')</button>
+                        <button type="submit" class="logout-btn">🚪 {{ session('locale') == 'en' ? 'Logout' : 'تسجيل خروج' }}</button>
                     </form>
                 </nav>
             </div>
@@ -49,10 +49,10 @@
             <div class="{{ auth()->check() ? 'col-md-10' : 'col-md-12' }} p-3">
                 @auth
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>@yield('page_title', __('dashboard'))</h5>
+                    <h5>@yield('page_title', session('locale') == 'en' ? 'Dashboard' : 'لوحة التحكم')</h5>
                     <div>
                         <small class="text-muted">👤 {{ auth()->user()->name }}</small>
-                        <a href="{{ route('setlang', 'ar') }}" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
+                        <a href="/setlang/ar" class="btn btn-sm btn-outline-primary ms-2">عربي</a>
                     </div>
                 </div>
                 @endauth
